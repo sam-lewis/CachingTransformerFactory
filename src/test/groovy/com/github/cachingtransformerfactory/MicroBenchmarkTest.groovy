@@ -9,13 +9,11 @@ import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
 class MicroBenchmarkTest {
-    def iterations = 1000
+    def iterations = 500
 
     @Test
     void transformWithoutCache() {
-
         System.setProperty("javax.xml.transform.TransformerFactory", TransformerFactoryImpl.class.name)
-
 
         benchmark(iterations)
     }
@@ -24,8 +22,6 @@ class MicroBenchmarkTest {
     void transformWithCache() {
         System.setProperty("javax.xml.transform.TransformerFactory", CachingTransformerFactory.class.name)
         System.setProperty("com.github.cachingtransformerfactory.CachingTransformerFactory.delegate", TransformerFactoryImpl.class.name)
-
-        new CachingTransformerFactory()
 
         benchmark(iterations)
     }
