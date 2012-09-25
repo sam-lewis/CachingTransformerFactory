@@ -4,6 +4,7 @@ package com.github.cachingtransformerfactory;
 import com.google.common.base.Strings;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 
 import javax.xml.transform.*;
@@ -24,7 +25,7 @@ public class CachingTransformerFactory extends TransformerFactory {
     private final CacheLoader<StreamSourceWrapper, Templates> cacheLoader = new CacheLoader<StreamSourceWrapper, Templates>() {
         @Override
         public Templates load(StreamSourceWrapper streamSource) throws Exception {
-            return CachingTransformerFactory.this.delegate.newTemplates(streamSource.getDelegate());
+            return delegate.newTemplates(streamSource.getDelegate());
         }
     };
 
@@ -35,11 +36,11 @@ public class CachingTransformerFactory extends TransformerFactory {
             String cacheSpec = System.getProperty(CACHE_SPEC_PROPERTY);
 
             if (Strings.isNullOrEmpty(delegateClazz)) {
-                throw new IllegalStateException("System property is not set: " + DELEGATE_CLAZZ_PROPERTY);
+                throw new IllegalArgumentException("System property is not set: " + DELEGATE_CLAZZ_PROPERTY);
             }
 
             if (Strings.isNullOrEmpty(cacheSpec)) {
-                cacheSpec = "maximumSize=100";
+                cacheSpec = "";
             }
 
             TransformerFactory delegate = (TransformerFactory) Class.forName(delegateClazz).newInstance();
@@ -77,7 +78,7 @@ public class CachingTransformerFactory extends TransformerFactory {
         if (source instanceof StreamSource) {
             StreamSourceWrapper streamSourceWrapper = new StreamSourceWrapper((StreamSource) source);
 
-            if (streamSourceWrapper.isCachable()) {
+            if (streamSourceWrapper.isCacheable()) {
                 return templateCache.getUnchecked(streamSourceWrapper);
             }
         }
@@ -127,5 +128,9 @@ public class CachingTransformerFactory extends TransformerFactory {
     @Override
     public ErrorListener getErrorListener() {
         return delegate.getErrorListener();
+    }
+
+    public CacheStats stats() {
+        return templateCache.stats();
     }
 }

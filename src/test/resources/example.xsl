@@ -13,7 +13,9 @@
                     </tr>
                     <xsl:for-each select="catalog/cd">
                         <tr>
-                            <td><xsl:value-of select="title"/></td>
+                            <td>
+                                <xsl:value-of select="title"/>
+                            </td>
                             <xsl:choose>
                                 <xsl:when test="price > 10">
                                     <td bgcolor="#ff00ff">
@@ -22,10 +24,13 @@
                                 </xsl:when>
                                 <xsl:when test="price > 9">
                                     <td bgcolor="#cccccc">
-                                        <xsl:value-of select="artist"/></td>
+                                        <xsl:value-of select="artist"/>
+                                    </td>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <td><xsl:value-of select="artist"/></td>
+                                    <td>
+                                        <xsl:value-of select="artist"/>
+                                    </td>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </tr>

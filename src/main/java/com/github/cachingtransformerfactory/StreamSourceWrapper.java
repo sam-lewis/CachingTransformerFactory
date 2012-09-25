@@ -12,16 +12,16 @@ class StreamSourceWrapper {
         this.delegate = delegate;
     }
 
-    public boolean isCachable() {
+    public boolean isCacheable() {
         return Strings.nullToEmpty(getDelegate().getSystemId()).length() > 0;
     }
 
     @Override
     public int hashCode() {
-        if(isCachable()) {
+        if (isCacheable()) {
             return getDelegate().getSystemId().hashCode();
         } else {
-            return super.hashCode();
+            return getDelegate().hashCode();
         }
     }
 
@@ -32,7 +32,7 @@ class StreamSourceWrapper {
         }
 
         StreamSourceWrapper otherWrapper = (StreamSourceWrapper) other;
-        if(isCachable() && otherWrapper.isCachable()) {
+        if (isCacheable() && otherWrapper.isCacheable()) {
             return getDelegate().getSystemId().equals(otherWrapper.getDelegate().getSystemId());
         } else {
             return false;
