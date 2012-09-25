@@ -13,7 +13,7 @@ The cache only operates on StreamSource objects with a SystemId set, it will cac
     $ cd CachingTransformerFactory
     $ mvn install
 
-##Basic Usage
+## Basic Usage
 Add`guava-13.0.jar`and`CachingTransformerFactory-1.0.jar`to your classpath.  
 Set the system properties
 
@@ -27,13 +27,21 @@ An example is:
     -Dcom.github.cachingtransformerfactory.CachingTransformerFactory.delegate=\
     com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl mypackage.MyApp
     
-Cache Settings
---------------
+## Cache Settings
 
-Code Samples
-------------
+By default, the cache is created with not perform any kind of eviction and grow unbounded. The cache settings can be set with an additional optional system property:
+    -Dcom.github.cachingtransformerfactory.CachingTransformerFactory.cache=initialCapacity=50,maximumSize=100
+
+The cache specification string format is documented in the javadocs for Guavas[`CacheBuilderSpec`](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/CacheBuilderSpec.html)class 
+
+## Code Samples
 
 ### Caching from Files
 ### Caching from InputStreams
 ### Caching from Readers
 ### Cache Stats
+
+## Todo
+* Improve xslt integration tests.
+* Adding logging
+
