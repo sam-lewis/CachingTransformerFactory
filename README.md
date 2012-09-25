@@ -2,11 +2,11 @@
 
 A Java XSLT TransformerFactory which caches Templates objects using Guava Cache. 
 
-By switching to this transformer you can get a significant performance boost from caching Templates objects.
+Delegates to any`TransformerFactory`. 
 
-The cache only operates on StreamSource objects with a SystemId set, it will cache out-of-the-box for StreamSource objects created from files. To enable caching from StreamSource objects created from an InputStream / Reader set StreamSource.systemId to a unique value for that stylesheet.
+By switching to this transformer you can get a significant performance boost to your XSLT transforms usually without any code changes.
 
-
+The cache only operates on StreamSource objects with a SystemId set, it will cache out-of-the-box for StreamSource objects created from files. To enable caching from StreamSource objects created from an InputStream / Reader set StreamSource.systemId to a unique value for that stylesheet (examples below).
 
 ## Building
     $ git clone git://github.com/sam-lewis/CachingTransformerFactory.git
