@@ -30,6 +30,7 @@ An example is:
 ## Cache Settings
 
 By default, the cache is created with not perform any kind of eviction and grow unbounded. The cache settings can be set with an additional optional system property:
+
     -Dcom.github.cachingtransformerfactory.CachingTransformerFactory.cache=initialCapacity=50,maximumSize=100
 
 The cache specification string format is documented in the javadocs for Guavas[`CacheBuilderSpec`](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/CacheBuilderSpec.html)class 
