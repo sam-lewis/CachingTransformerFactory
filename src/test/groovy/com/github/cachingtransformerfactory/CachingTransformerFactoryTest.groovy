@@ -15,6 +15,11 @@ class CachingTransformerFactoryTest extends Specification {
     TransformerFactory delegate = Mock()
     def cachingTransformerFactory = new CachingTransformerFactory(delegate, new CacheBuilder().recordStats())
 
+    def cleanup() {
+        System.getProperties().remove("com.github.cachingtransformerfactory.CachingTransformerFactory.delegate")
+        System.getProperties().remove("com.github.cachingtransformerfactory.CachingTransformerFactory.cache")
+    }
+
     def "default constructor throws IllegalArgumentException when system property delegate class is not set"() {
         given:
         System.getProperties().remove("com.github.cachingtransformerfactory.CachingTransformerFactory.delegate")

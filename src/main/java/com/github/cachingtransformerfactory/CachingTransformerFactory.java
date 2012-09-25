@@ -33,14 +33,10 @@ public class CachingTransformerFactory extends TransformerFactory {
     public CachingTransformerFactory() {
         try {
             String delegateClazz = System.getProperty(DELEGATE_CLAZZ_PROPERTY);
-            String cacheSpec = System.getProperty(CACHE_SPEC_PROPERTY);
+            String cacheSpec = Strings.nullToEmpty(System.getProperty(CACHE_SPEC_PROPERTY));
 
             if (Strings.isNullOrEmpty(delegateClazz)) {
                 throw new IllegalArgumentException("System property is not set: " + DELEGATE_CLAZZ_PROPERTY);
-            }
-
-            if (Strings.isNullOrEmpty(cacheSpec)) {
-                cacheSpec = "";
             }
 
             TransformerFactory delegate = (TransformerFactory) Class.forName(delegateClazz).newInstance();

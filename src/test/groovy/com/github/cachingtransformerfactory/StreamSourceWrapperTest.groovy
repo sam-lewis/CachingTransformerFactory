@@ -6,7 +6,7 @@ import javax.xml.transform.stream.StreamSource
 
 class StreamSourceWrapperTest extends Specification {
 
-    def "isCachable() returns true for StreamSources with a systemId"() {
+    def "isCacheable() returns true for StreamSources with a systemId"() {
         given:
         def streamSource = new StreamSource(systemId)
         def wrapper = new StreamSourceWrapper(streamSource)
@@ -15,10 +15,10 @@ class StreamSourceWrapperTest extends Specification {
         def result = wrapper.cacheable
 
         then:
-        result == cachable
+        result == cacheable
 
         where:
-        systemId      | isCacheable
+        systemId      | cacheable
         null          | false
         ""            | false
         "file://jada" | true
