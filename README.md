@@ -1,6 +1,6 @@
 # CachingTransformerFactory
 
-An Java XSLT TransformerFactory which caches Templates objects using Guava Cache. 
+A Java XSLT TransformerFactory which caches Templates objects using Guava Cache. 
 
 By switching to this transformer you can get a significant performance boost from caching Templates objects.
 
