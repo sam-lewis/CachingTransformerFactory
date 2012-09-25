@@ -29,7 +29,7 @@ An example is:
     
 ## Cache Settings
 
-By default, the cache is created with not perform any kind of eviction and grow unbounded. The cache settings can be set with an additional optional system property:
+By default, the cache does not perform any kind of eviction and will grow unbounded. The cache settings can be set with an additional optional system property:
 
     -Dcom.github.cachingtransformerfactory.CachingTransformerFactory.cache=initialCapacity=50,maximumSize=100
 
