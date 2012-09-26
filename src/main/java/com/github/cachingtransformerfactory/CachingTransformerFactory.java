@@ -17,6 +17,7 @@ public class CachingTransformerFactory extends TransformerFactory {
 
     private static final String DELEGATE_CLAZZ_PROPERTY = CachingTransformerFactory.class.getName() + ".delegate";
     private static final String CACHE_SPEC_PROPERTY = CachingTransformerFactory.class.getName() + ".cache";
+    private static final String CACHE_STATS_PROPERTY = CachingTransformerFactory.class.getName() + ".stats";
 
     private final TransformerFactory delegate;
 
@@ -29,11 +30,11 @@ public class CachingTransformerFactory extends TransformerFactory {
         }
     };
 
-
     public CachingTransformerFactory() {
         try {
             String delegateClazz = System.getProperty(DELEGATE_CLAZZ_PROPERTY);
             String cacheSpec = Strings.nullToEmpty(System.getProperty(CACHE_SPEC_PROPERTY));
+            boolean cacheStats = Boolean.parseBoolean(System.getProperty(CACHE_STATS_PROPERTY));
 
             if (Strings.isNullOrEmpty(delegateClazz)) {
                 throw new IllegalArgumentException("System property is not set: " + DELEGATE_CLAZZ_PROPERTY);
@@ -42,6 +43,10 @@ public class CachingTransformerFactory extends TransformerFactory {
             TransformerFactory delegate = (TransformerFactory) Class.forName(delegateClazz).newInstance();
 
             CacheBuilder cacheBuilder = CacheBuilder.from(cacheSpec);
+
+            if(cacheStats) {
+               cacheBuilder.recordStats();
+            }
 
             this.delegate = delegate;
             this.templateCache = cacheBuilder.build(cacheLoader);
