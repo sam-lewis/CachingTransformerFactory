@@ -35,14 +35,25 @@ By default, the cache does not perform any kind of eviction and will grow unboun
 
 The cache specification string format is documented in the javadocs for Guavas[`CacheBuilderSpec`](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/CacheBuilderSpec.html)class 
 
-## Code Samples
+## Singleton Transformer Factory
 
-### Caching from Files
-### Caching from InputStreams
-### Caching from Readers
-### Cache Stats
+When using`CachingTransformerFactory`each call to`TransformerFactory.newInstance()`returns a new instance with a private cache. If it is desirable to have a shared stylesheet cache for all`TransformerFactory`instances, use`SingletonCachingTransformerFactory`:
 
-## Todo
-* Improve xslt integration tests.
-* Adding logging
+    -Djavax.xml.transform.TransformerFactory=com.github.cachingtransformerfactory.SingletonCachingTransformerFactory    
+
+To access the single shared instance of`CachingTransformerFactory`, invoke`SingletonCachingTransformerFactory.getInstance()`.  
+
+## Cache Stats
+
+To programatically get cache statistics from`CachingTransformerFactory`, first enable statistic recording by setting the property:
+
+    -Dcom.github.cachingtransformerfactory.CachingTransformerFactory.stats=true
+    
+Then access a Guava[`CacheStats`](http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/CacheStats.html) object:
+
+    CachingTransformerFactory factory = (CachingTransformerFactory)TransformerFactory.newInstance();  
+    CacheStats stats = factory.stats();
+    System.out.println("request count" + stats.requestCount());
+    System.out.println("hit count" + stats.hitCount());
+    
 
